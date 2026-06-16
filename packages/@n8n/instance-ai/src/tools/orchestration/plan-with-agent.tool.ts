@@ -856,14 +856,10 @@ export function createPlanWithAgentTool(context: OrchestrationContext) {
 				) {
 					accumulator.reconcileDependencies();
 					const tasks = accumulator.getTaskList();
-					await context.plannedTaskService.createPlan(
-						context.threadId,
-						tasks as PlannedTask[],
-						{
-							planRunId: context.runId,
-							messageGroupId: context.messageGroupId,
-						},
-					);
+					await context.plannedTaskService.createPlan(context.threadId, tasks as PlannedTask[], {
+						planRunId: context.runId,
+						messageGroupId: context.messageGroupId,
+					});
 					publishPlanUpdate(accumulator, context);
 					accumulator.markApproved();
 					await context.plannedTaskService.approvePlan(context.threadId);

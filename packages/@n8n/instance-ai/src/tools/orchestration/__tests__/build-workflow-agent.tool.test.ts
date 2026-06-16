@@ -228,9 +228,7 @@ describe('buildWarmBuilderFollowUp', () => {
 
 		expect(briefing).toContain('<builder-follow-up type="fix">');
 		expect(briefing).toContain('Workflow ID: workflow-1');
-		expect(briefing).toContain(
-			'Do not stop after a successful submit — verify the workflow works',
-		);
+		expect(briefing).toContain('Do not stop after a successful submit — verify the workflow works');
 		expect(briefing).toContain('The sequence is always: edit → submit → then verify/run.');
 		expect(briefing).toContain('nodes(action="explore-resources")');
 		expect(briefing).toContain('Do NOT call `workflows(action="publish")` for the main workflow');

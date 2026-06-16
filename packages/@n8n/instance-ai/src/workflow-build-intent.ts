@@ -1,10 +1,6 @@
 import type { WorkSummary } from './stream/work-summary-accumulator';
 
-const WORKFLOW_DISPATCH_TOOLS = new Set([
-	'build-workflow-with-agent',
-	'create-tasks',
-	'delegate',
-]);
+const WORKFLOW_DISPATCH_TOOLS = new Set(['build-workflow-with-agent', 'create-tasks', 'delegate']);
 
 const EXCLUDE_PATTERNS = [
 	/\b(delete|remove|삭제|지워)\b/i,

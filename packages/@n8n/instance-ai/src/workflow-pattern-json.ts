@@ -40,7 +40,7 @@ const SHEET_CONTENT_RELAY_PATTERN =
 	/시트\s*내용|sheet\s*content|내용을?\s*(보내|전송)|읽어\s*서?\s*보내|가져와\s*서?\s*보내/i;
 
 const SHEET_CONTENT_DISCORD_MESSAGE =
-	"={{ JSON.stringify($input.all().map((item) => item.json), null, 2).slice(0, 1900) }}";
+	'={{ JSON.stringify($input.all().map((item) => item.json), null, 2).slice(0, 1900) }}';
 
 const NODE_X_GAP = 320;
 
@@ -144,11 +144,16 @@ function wantsSheetContentRelay(text: string): boolean {
 	return detectGoogleSheets(text) && SHEET_CONTENT_RELAY_PATTERN.test(text);
 }
 
-function wantsBigQuerySlackPattern(text: string, integration: ScheduledMessagingIntegration): boolean {
+function wantsBigQuerySlackPattern(
+	text: string,
+	integration: ScheduledMessagingIntegration,
+): boolean {
 	return integration === 'slack' && BIGQUERY_PATTERN.test(text) && QUERY_RESULT_PATTERN.test(text);
 }
 
-function buildScheduleTriggerNode(interval: ScheduleIntervalConfig): PatternWorkflowJson['nodes'][number] {
+function buildScheduleTriggerNode(
+	interval: ScheduleIntervalConfig,
+): PatternWorkflowJson['nodes'][number] {
 	const name =
 		interval.field === 'minutes'
 			? interval.minutesInterval === 1
@@ -318,7 +323,10 @@ function buildTelegramNode(
 	};
 }
 
-function buildSlackNode(content: string, xPosition = NODE_X_GAP): PatternWorkflowJson['nodes'][number] {
+function buildSlackNode(
+	content: string,
+	xPosition = NODE_X_GAP,
+): PatternWorkflowJson['nodes'][number] {
 	return {
 		id: randomUUID(),
 		name: 'Send Slack message',
@@ -441,9 +449,7 @@ export function tryBuildPatternWorkflowJson(message: string): PatternWorkflowJso
 	};
 }
 
-export function getPatternWorkflowSetupHint(
-	message: string,
-): ScheduledMessagingIntegration | null {
+export function getPatternWorkflowSetupHint(message: string): ScheduledMessagingIntegration | null {
 	const text = message.trim();
 	if (!parseMinutesInterval(text) || !detectIntegration(text)) {
 		return null;
@@ -457,8 +463,6 @@ export function formatPatternWorkflowCreatedMessage(
 ): string {
 	const integration = getPatternWorkflowSetupHint(userMessage);
 	const setupHint = integration ? SETUP_HINTS[integration] : '노드 자격 증명과 대상 채널을';
-	const sheetsHint = detectGoogleSheets(userMessage)
-		? 'Google Sheets 스프레드시트·시트와 '
-		: '';
+	const sheetsHint = detectGoogleSheets(userMessage) ? 'Google Sheets 스프레드시트·시트와 ' : '';
 	return `워크플로 "${workflowName}"을(를) 만들었습니다. 에디터에서 ${sheetsHint}${setupHint} 설정한 뒤 활성화해 주세요.`;
 }

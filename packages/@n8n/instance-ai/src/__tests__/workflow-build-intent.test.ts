@@ -1,7 +1,4 @@
-import {
-	hasDispatchedWorkflowWork,
-	isWorkflowBuildRequest,
-} from '../workflow-build-intent';
+import { hasDispatchedWorkflowWork, isWorkflowBuildRequest } from '../workflow-build-intent';
 
 describe('isWorkflowBuildRequest', () => {
 	it('detects explicit Korean workflow creation requests', () => {

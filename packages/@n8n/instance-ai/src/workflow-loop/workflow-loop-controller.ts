@@ -361,10 +361,7 @@ function escalateToRepair(
 	action: WorkflowLoopAction,
 ): TransitionResult {
 	// Retry policy: one repair attempt per unique failure signature.
-	if (
-		verdict.failureSignature &&
-		hasRepeatedRepair(attempts, verdict.failureSignature)
-	) {
+	if (verdict.failureSignature && hasRepeatedRepair(attempts, verdict.failureSignature)) {
 		const blockedRemediation = createRemediation({
 			category: 'blocked',
 			shouldEdit: false,

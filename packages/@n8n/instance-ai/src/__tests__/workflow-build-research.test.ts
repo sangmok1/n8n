@@ -2,8 +2,7 @@ import { buildWorkflowResearchContext } from '../workflow-build-research';
 import type { InstanceAiWorkflowService } from '../types';
 
 describe('buildWorkflowResearchContext', () => {
-	const message =
-		'3분마다 hi라는걸 구글 시트에 넣고 그걸 디스코드 봇이 받아서 보내는 워크플로우';
+	const message = '3분마다 hi라는걸 구글 시트에 넣고 그걸 디스코드 봇이 받아서 보내는 워크플로우';
 
 	it('includes required pipeline steps and research instructions', async () => {
 		const workflowService = {

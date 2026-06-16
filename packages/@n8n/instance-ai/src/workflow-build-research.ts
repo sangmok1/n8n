@@ -3,7 +3,10 @@ import type { InstanceAiWorkflowService, WorkflowSummary } from './types';
 
 const INTEGRATION_SEARCH_TERMS: Array<{ label: string; terms: string[] }> = [
 	{ label: 'Discord', terms: ['discord', '디스코드'] },
-	{ label: 'Google Sheets', terms: ['google sheets', 'google sheet', '구글 시트', '구글시트', 'spreadsheet'] },
+	{
+		label: 'Google Sheets',
+		terms: ['google sheets', 'google sheet', '구글 시트', '구글시트', 'spreadsheet'],
+	},
 	{ label: 'Telegram', terms: ['telegram', '텔레그램'] },
 	{ label: 'Slack', terms: ['slack', '슬랙'] },
 	{ label: 'Gmail', terms: ['gmail', '이메일', 'email'] },
@@ -13,8 +16,7 @@ const INTEGRATION_SEARCH_TERMS: Array<{ label: string; terms: string[] }> = [
 const SCHEDULE_PATTERN =
 	/매일|매주|매월|매분|매시간|\d+\s*분마다|1분마다|분마다|every\s+(\d+\s+)?(day|morning|evening|hour|minute|week)|cron|스케줄|주기|정기/i;
 
-const SHEETS_WRITE_PATTERN =
-	/구글\s*시트|google\s*sheets?|spreadsheet|스프레드시트/i;
+const SHEETS_WRITE_PATTERN = /구글\s*시트|google\s*sheets?|spreadsheet|스프레드시트/i;
 
 const SHEETS_RELAY_PATTERN =
 	/시트\s*내용|sheet\s*content|내용을?\s*(보내|전송)|읽어\s*서?\s*보내|가져와\s*서?\s*보내|받아\s*서?\s*보내/i;

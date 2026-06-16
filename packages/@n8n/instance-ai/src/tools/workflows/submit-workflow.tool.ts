@@ -139,7 +139,10 @@ function enhanceValidationErrors(errors: string[]): string[] {
 function enhanceBuildErrors(errors: string[]): string[] {
 	const needsJsonExprGuidance = errors.some((error) => {
 		const normalized = error.toLowerCase();
-		return normalized.includes("unknown identifier: '$json'") || normalized.includes('$json is not defined');
+		return (
+			normalized.includes("unknown identifier: '$json'") ||
+			normalized.includes('$json is not defined')
+		);
 	});
 	const needsTemplateGuidance = errors.some((error) => {
 		const normalized = error.toLowerCase();
@@ -528,14 +531,11 @@ export function createSubmitWorkflowTool(
 					if (isCredentialSaveFailure(saveErrorText)) {
 						const strippedNodeCount = stripAllNodeCredentials(json);
 						if (strippedNodeCount > 0) {
-							context.logger?.warn(
-								'Retrying workflow save after stripping credential references',
-								{
-									workflowId,
-									strippedNodeCount,
-									error: saveErrorMessage,
-								},
-							);
+							context.logger?.warn('Retrying workflow save after stripping credential references', {
+								workflowId,
+								strippedNodeCount,
+								error: saveErrorMessage,
+							});
 							try {
 								if (workflowId) {
 									const updated = await context.workflowService.updateFromWorkflowJSON(
