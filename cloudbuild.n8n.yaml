@@ -1,0 +1,24 @@
+steps:
+  - name: node:24.15.0
+    env:
+      - CI=true
+      - NODE_OPTIONS=--max-old-space-size=28672
+    entrypoint: bash
+    args:
+      - -lc
+      - |
+        corepack enable
+        corepack prepare pnpm@10.32.1 --activate
+        pnpm install --frozen-lockfile --prod=false
+        node scripts/build-n8n.mjs
+
+  - name: gcr.io/cloud-builders/docker
+    args: ['build', '-f', 'docker/images/n8n/Dockerfile', '-t', '$_IMAGE', '.']
+
+images:
+  - '$_IMAGE'
+
+options:
+  machineType: E2_HIGHCPU_32
+  diskSizeGb: 100
+timeout: '3600s'

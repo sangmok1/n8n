@@ -2,12 +2,7 @@ import { LoginRequestDto, ResolveSignupTokenQueryDto, SignupRequestDto } from '@
 import { Logger } from '@n8n/backend-common';
 import { Time } from '@n8n/constants';
 import type { User, PublicUser, AuthProviderType } from '@n8n/db';
-import {
-	UserRepository,
-	AuthenticatedRequest,
-	GLOBAL_OWNER_ROLE,
-	Like,
-} from '@n8n/db';
+import { UserRepository, AuthenticatedRequest, GLOBAL_OWNER_ROLE, Like } from '@n8n/db';
 import {
 	Body,
 	createBodyKeyedRateLimiter,
@@ -134,8 +129,6 @@ export class AuthController {
 		_res: Response,
 		@Body payload: SignupRequestDto,
 	): Promise<{ submitted: boolean }> {
-		payload ??= {};
-
 		if (isSsoCurrentAuthenticationMethod()) {
 			throw new BadRequestError('Signup requests are not supported when SSO is enabled.');
 		}

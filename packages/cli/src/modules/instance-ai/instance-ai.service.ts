@@ -2245,7 +2245,7 @@ export class InstanceAiService {
 	}
 
 	private buildBackgroundTerminalOutcome(task: ManagedBackgroundTask): TerminalOutcome {
-		let status =
+		let status: TerminalOutcome['status'] =
 			task.status === 'failed' ? 'failed' : task.status === 'cancelled' ? 'cancelled' : 'completed';
 		if (task.skipAutoFollowUp && status === 'completed' && !this.isDirectBuildSuccessful(task)) {
 			status = 'failed';
@@ -2716,8 +2716,7 @@ export class InstanceAiService {
 								.getEventsForRun(threadId, runId)
 								.findLast(
 									(event): event is Extract<InstanceAiEvent, { type: 'confirmation-request' }> =>
-										event.type === 'confirmation-request' &&
-										event.payload.requestId === requestId,
+										event.type === 'confirmation-request' && event.payload.requestId === requestId,
 								);
 							if (confirmation?.payload.inputType === 'plan-review') {
 								this.runState.resolvePendingConfirmation(user.id, requestId, {
@@ -3033,11 +3032,7 @@ export class InstanceAiService {
 			);
 			const fallback =
 				pattern ??
-				(await this.createScaffoldWorkflowDraft(
-					task.threadId,
-					task.directBuildMessage,
-					adapter,
-				));
+				(await this.createScaffoldWorkflowDraft(task.threadId, task.directBuildMessage, adapter));
 			if (fallback) {
 				task.status = 'completed';
 				task.outcome = {
@@ -3082,7 +3077,6 @@ export class InstanceAiService {
 			responseId: `${runId}:workflow-artifact`,
 			payload: {
 				toolCallId,
-				toolName: 'workflows',
 				result: {
 					workflow: {
 						id: workflow.id,
